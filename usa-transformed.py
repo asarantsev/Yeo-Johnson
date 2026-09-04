@@ -1,10 +1,15 @@
+# This is a small version of the simulator with only one asset class: USA stocks
+# and one factor: volatility, with Yeo-Johnson transform
+# We simulate nominal total geometric returns
+
 import pandas as pd
 import numpy as np
 from statsmodels.api import OLS
 from scipy import stats
 from matplotlib import pyplot as plt
-from YJX import YJinv
+from YJX import YJinv # inverse Yeo-Johnson transform function
 
+# read the data
 np.random.seed(0)
 DF = pd.read_excel('full-data.xlsx', sheet_name = 'data')
 vol = DF['Volatility'].values[1:]
@@ -12,13 +17,18 @@ N = len(vol)
 price = DF['Price'].values
 dividend = DF['Dividends'].values[1:]
 lvol = np.log(vol)
-YJresults = stats.yeojohnson(lvol)
-la = YJresults[1]
-nvol = YJresults[0]
-total = np.array([np.log(price[k+1] + dividend[k]) - np.log(price[k]) for k in range(N)])
-nUSAret = total/vol
+
+YJresults = stats.yeojohnson(lvol) # Yeo-Johnson transform
+la = YJresults[1] # index of the transform
+nvol = YJresults[0] # images of transformed log volatility values
+total = np.array([np.log(price[k+1] + dividend[k]) - np.log(price[k]) for k in range(N)]) # computation of total returns
+nUSAret = total/vol # normalization
+
+# fitting simple linear regressions
 RegVol = OLS(nvol[1:], pd.DataFrame({'const' : 1, 'lag' : nvol[:-1]})).fit()
 RegUSA = OLS(nUSAret, pd.DataFrame({'const' : 1/vol, 'vol' : 1})).fit()
+
+# and recording coefficients and standard errors
 intVol = RegVol.params['const']
 slopeVol = RegVol.params['lag']
 stdVol = np.std(RegVol.resid)
@@ -26,12 +36,14 @@ intUSA = RegUSA.params['const']
 slopeUSA = RegUSA.params['vol']
 stdUSA = np.std(RegUSA.resid)
 
+# covariance matrix of residuals
 covVol = np.linalg.inv(np.array([[N - 1, np.sum(nvol[:-1])], [np.sum(nvol[:-1]), np.sum(np.square(nvol[:-1]))]]))
 covUSA = np.linalg.inv(np.array([[N, np.sum(1/vol)], [np.sum(1/vol), np.sum(np.square(1/vol))]])) 
 print(covVol)
 print(covUSA)
-NSIMS = 10000
+NSIMS = 10000 # number of simulations
 
+# frequentist simulation for T years
 def classicSim(initVol, T):
     ninitVol = stats.yeojohnson(np.log(initVol), la)
     noiseUSA = np.random.normal(0, stdUSA, (T, NSIMS))
@@ -52,6 +64,7 @@ def classicSim(initVol, T):
         
     return simRetUSA
 
+# Bayesian simulation with prior upon regression coefficients
 def bayesCoeffSim(initVol, T):
     ninitVol = stats.yeojohnson(np.log(initVol), la)
     noiseUSA = np.random.normal(0, stdUSA, (T, NSIMS))
@@ -80,6 +93,8 @@ def bayesCoeffSim(initVol, T):
       
     return simRetUSA
 
+# Bayesian simulation with prior upon standard errors
+# and upon regression coefficients
 def bayesAllSim(initVol, T):
     ninitVol = stats.yeojohnson(np.log(initVol), la)
     noiseUSA = np.random.normal(0, stdUSA, (T, NSIMS))
