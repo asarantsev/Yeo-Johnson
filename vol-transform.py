@@ -22,6 +22,7 @@ lvol = np.log(vol)
 
 # This is the quantile-quantile plot for log volatility
 qqplot(lvol, line = 's')
+plt.title('Original Log Volatility vs Gaussian Law')
 plt.show()
 
 # apply Yeo-Johnson transform to log volatility
@@ -30,7 +31,8 @@ la = scipy.stats.yeojohnson(lvol)[1]
 print('lambda = ', la)
 
 # This is the quantile-quantile plot for transformed log volatility
-qqplot(lvol, line = 's')
+qqplot(nvol, line = 's')
+plt.title('Transformed Log Volatility vs Gaussian Law')
 plt.show()
 
 # apply the inverse transform to test this function
@@ -46,6 +48,7 @@ volresid = RegVol.resid
 
 # test residuals for Gaussianity
 qqplot(volresid, line = 's')
+plt.title('AR(1) Residuals for Transformed Log Volatility')
 plt.show()
 print('Shapiro-Wilk test p = ', scipy.stats.shapiro(volresid)[1])
 print('Jarque-Bera test p = ', scipy.stats.jarque_bera(volresid)[1])
