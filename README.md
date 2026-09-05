@@ -18,3 +18,5 @@ intl-original.py: developed and emerging returns with original volatility.
 intl-transformed.py: developed and emerging returns with transformed volatility.
 
 https://my-finance.org/2026/09/03/yeo-johnson-transform-objective-bayes-inference-for-stock-returns-with-volatility-factor/
+
+Update: Apologies, I absolutely forgot that series of the two innovations also need to be correlated. All this was done for two independent series of residuals. But we still benefited from it, since we made this mistake for both original and transformed data; and for classic vs Bayesian. We need to include covariance matrix of innovations, for both classic and Bayesian versions. 
