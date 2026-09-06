@@ -20,3 +20,5 @@ intl-transformed.py: developed and emerging returns with transformed volatility.
 https://my-finance.org/2026/09/03/yeo-johnson-transform-objective-bayes-inference-for-stock-returns-with-volatility-factor/
 
 Update: Apologies, I absolutely forgot that series of the two innovations also need to be correlated. All this was done for two independent series of residuals. But we still benefited from it, since we made this mistake for both original and transformed data; and for classic vs Bayesian. We need to include covariance matrix of innovations, for both classic and Bayesian versions. 
+
+Update: I have completed this update. Turns out that yes, whether innovations are correlated or independent makes a big difference, especially in lower quantiles, where the value at risk is computed. I put the old Python files with independent innovations in the subfolder indep-innov and the new Python files with correlated innovations in the root folder. The resutls are available in the updated blog post linked above.
