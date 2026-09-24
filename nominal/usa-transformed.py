@@ -11,7 +11,7 @@ from YJX import YJinv # inverse Yeo-Johnson transform function
 
 # read the data
 np.random.seed(0)
-DF = pd.read_excel('full-data.xlsx', sheet_name = 'data')
+DF = pd.read_excel('bayes-yjx.xlsx', sheet_name = 'data')
 vol = DF['Volatility'].values[1:]
 N = len(vol)
 price = DF['Price'].values
