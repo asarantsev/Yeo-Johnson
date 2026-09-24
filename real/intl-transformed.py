@@ -8,6 +8,7 @@ from YJX import YJinv
 np.random.seed(0)
 DF = pd.read_excel('bayes-yjx.xlsx', sheet_name = 'data')
 vol = DF['Volatility'].values[1:]
+infl = np.diff(np.log(cpi))
 N = len(vol)
 intl = DF['International'].values[43:]
 # intl = DF['Emerging'].values[61:]
@@ -16,7 +17,7 @@ lvol = np.log(vol)
 YJresults = stats.yeojohnson(lvol)
 la = YJresults[1]
 nvol = YJresults[0]
-total = np.log(1 + intl) 
+total = np.log(1 + intl) - infl[-M:]
 Nret = total/vol[-M:]
 RegVol = OLS(nvol[1:], pd.DataFrame({'const' : 1, 'lag' : nvol[:-1]})).fit()
 RegIntl = OLS(Nret, pd.DataFrame({'const' : 1/vol[-M:], 'vol' : 1})).fit()
