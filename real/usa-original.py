@@ -11,6 +11,7 @@ from scipy import stats
 np.random.seed(0)
 DF = pd.read_excel('bayes-yjx.xlsx', sheet_name = 'data')
 vol = DF['Volatility'].values[1:]
+infl = np.diff(np.log(cpi))
 N = len(vol)
 price = DF['Price'].values
 dividend = DF['Dividends'].values[1:]
@@ -20,7 +21,7 @@ lvol = np.log(vol)
 total = np.array([np.log(price[k+1] + dividend[k]) - np.log(price[k]) for k in range(N)])
 
 # normalization
-nUSAret = total/vol
+nUSAret = (total - infl)/vol
 
 # fitting simple linear regressions
 RegVol = OLS(lvol[1:], pd.DataFrame({'const' : 1, 'lag' : lvol[:-1]})).fit()
