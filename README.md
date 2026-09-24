@@ -1,7 +1,7 @@
 # Yeo-Johnson
 Yeo-Johnson transform of log annual volatility for objective Bayes inference.
 
-full-data.xlsx for the data 1927-2025
+bayes-yjx.xlsx for the data 1927-2025
 
 vol-transform.py fits the autoregression of order 1 of transformed logarithmic volatility. We confirm that these innovations are IID Gaussian. This uses the Yeo-Johnson transform, which is similar to the Box-Cox transform but allows for negative values (both originals and images). 
 
