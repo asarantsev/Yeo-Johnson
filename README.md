@@ -7,18 +7,20 @@ vol-transform.py fits the autoregression of order 1 of transformed logarithmic v
 
 YJX.py contains the inverse Yeo-Johnson transform. We apply this after performing Monte Carlo simulation transformed log volatility to get real volatility. 
 
-The following four files each have classic (frequentist), Bayesian-lite, and Bayesian-full modes for simulations. 
+Then we have three folders: 
 
-usa-original.py: domestic returns with original volatility.
+indep-innov for the case when innovations for autoregressions of volatility and for regressions of returns are independent; returns are nominal
 
-usa-transformed.py: domestic returns with transformed volatility.
+nominal and real for the case when the innovations are bivariate Gaussian but dependent; returns are nominal and real, correspondingly
 
-intl-original.py: developed and emerging returns with original volatility.
+In each folder, we have four files, each has classic (frequentist), Bayesian-lite, and Bayesian-full modes for simulations
 
-intl-transformed.py: developed and emerging returns with transformed volatility.
+usa-original.py: domestic returns with original volatility
 
-https://my-finance.org/2026/09/03/yeo-johnson-transform-objective-bayes-inference-for-stock-returns-with-volatility-factor/
+usa-transformed.py: domestic returns with transformed volatility
 
-Update: Apologies, I absolutely forgot that series of the two innovations also need to be correlated. All this was done for two independent series of residuals. But we still benefited from it, since we made this mistake for both original and transformed data; and for classic vs Bayesian. We need to include covariance matrix of innovations, for both classic and Bayesian versions. 
+intl-original.py: developed and emerging returns with original volatility
 
-Update: I have completed this update. Turns out that yes, whether innovations are correlated or independent makes a big difference, especially in lower quantiles, where the value at risk is computed. I put the old Python files with independent innovations in the subfolder indep-innov and the new Python files with correlated innovations in the root folder. The resutls are available in the updated blog post linked above.
+intl-transformed.py: developed and emerging returns with transformed volatility
+
+See also my blog post https://my-finance.org/2026/09/03/yeo-johnson-transform-objective-bayes-inference-for-stock-returns-with-volatility-factor/
