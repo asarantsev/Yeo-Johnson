@@ -1,7 +1,7 @@
 # This is a small version of the simulator with only one asset class:
 # international stocks (choose either developed or emerging markets)
 # and one factor: volatility, without Yeo-Johnson transform
-# We simulate nominal total geometric returns
+# We simulate real total geometric returns
 
 import pandas as pd
 import numpy as np
