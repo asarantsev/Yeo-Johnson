@@ -16,6 +16,7 @@ vol = DF['Volatility'].values[1:]
 N = len(vol)
 price = DF['Price'].values
 dividend = DF['Dividends'].values[1:]
+cpi = DF['CPI'].values
 infl = np.diff(np.log(cpi))
 lvol = np.log(vol)
 
