@@ -11,9 +11,12 @@ from matplotlib import pyplot as plt
 from YJX import YJinv
 
 np.random.seed(0)
+
+# read data
 DF = pd.read_excel('bayes-yjx.xlsx', sheet_name = 'data')
 vol = DF['Volatility'].values[1:]
 N = len(vol)
+
 # developed markets 1970-2025
 # or emerging markets 1988-2025
 # choose between one of the next two lines
