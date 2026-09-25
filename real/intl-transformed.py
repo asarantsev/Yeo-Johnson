@@ -13,6 +13,7 @@ from YJX import YJinv
 np.random.seed(0)
 DF = pd.read_excel('bayes-yjx.xlsx', sheet_name = 'data')
 vol = DF['Volatility'].values[1:]
+cpi = DF['CPI'].values
 infl = np.diff(np.log(cpi))
 N = len(vol)
 intl = DF['International'].values[43:]
