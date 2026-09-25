@@ -9,8 +9,9 @@ from statsmodels.api import OLS
 from scipy import stats
 from matplotlib import pyplot as plt
 
-# read data
 np.random.seed(0)
+
+# read data
 DF = pd.read_excel('bayes-yjx.xlsx', sheet_name = 'data')
 vol = DF['Volatility'].values[1:]
 N = len(vol)
