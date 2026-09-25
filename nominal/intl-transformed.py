@@ -1,3 +1,8 @@
+# This is a small version of the simulator with only one asset class:
+# international stocks (choose either developed or emerging markets)
+# and one factor: volatility, with Yeo-Johnson transform
+# We simulate nominal total geometric returns
+
 import pandas as pd
 import numpy as np
 from statsmodels.api import OLS
@@ -9,6 +14,9 @@ np.random.seed(0)
 DF = pd.read_excel('bayes-yjx.xlsx', sheet_name = 'data')
 vol = DF['Volatility'].values[1:]
 N = len(vol)
+# developed markets 1970-2025
+# or emerging markets 1988-2025
+# choose between one of the next two lines
 intl = DF['International'].values[43:]
 # intl = DF['Emerging'].values[61:]
 M = len(intl)
